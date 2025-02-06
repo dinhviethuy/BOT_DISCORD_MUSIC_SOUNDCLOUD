@@ -27,6 +27,5 @@ export const skip = {
     player.on('error', (error) => {
       console.error('Lỗi khi tiếp tục nhạc: ', error)
     })
-    await interaction.editReply({ content: 'Bot đã tiếp tục nhạc!' })
   }
 }
