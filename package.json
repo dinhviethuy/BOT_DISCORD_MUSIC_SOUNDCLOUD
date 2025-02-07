@@ -2,15 +2,16 @@
   "name": "discord-bot",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "dev": "npx nodemon",
-    "build": "rimraf ./dist && tsc && tsc-alias",
-    "start": "node dist/index.js",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write ."
-  },
+"scripts": {
+  "dev": "npx nodemon",
+  "build": "rimraf ./dist && tsc && tsc-alias",
+  "start": "node dist/index.js",
+  "postinstall": "npm run build",
+  "lint": "eslint .",
+  "lint:fix": "eslint . --fix",
+  "prettier": "prettier --check .",
+  "prettier:fix": "prettier --write ."
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
