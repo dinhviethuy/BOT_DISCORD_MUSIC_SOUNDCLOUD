@@ -6,7 +6,7 @@ import {
   joinVoiceChannel,
   VoiceConnection
 } from '@discordjs/voice'
-import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder } from 'discord.js'
+import { ChatInputCommandInteraction, EmbedBuilder, GuildMember, SlashCommandBuilder } from 'discord.js'
 import play from 'play-dl'
 import { config } from 'dotenv'
 
@@ -49,12 +49,22 @@ async function playNextSong() {
     const song = searchResults[0]
     const url = song.url
     const title = song.name
+    const embed = new EmbedBuilder()
+      .setColor('#007FFF')
+      .setTitle(title)
+      .setURL(url)
+      .setThumbnail(song.thumbnail)
+      .addFields(
+        { name: 'Author', value: song.publisher?.artist ?? 'Unknown', inline: true },
+        { name: 'Type', value: 'Song', inline: true }
+      )
     const audio = await play.stream(url)
     const resource = createAudioResource(audio.stream, { inputType: audio.type })
     player.play(resource)
     lastConnection?.subscribe(player)
     if (lastInteraction) {
-      lastInteraction.editReply({ content: `Đang phát: **${title}**` })
+      // lastInteraction.editReply({ content: `Đang phát: **${title}**` })
+      await lastInteraction.editReply({ embeds: [embed] })
     }
   } catch (error) {
     console.error(`Lỗi khi phát nhạc: ${error}`)
