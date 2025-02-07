@@ -1,6 +1,6 @@
 import { getVoiceConnection } from '@discordjs/voice'
 import { ChatInputCommandInteraction, GuildMember, SlashCommandBuilder } from 'discord.js'
-import { player } from './play'
+import { player, queue_map } from './play'
 
 export const resume = {
   data: new SlashCommandBuilder().setName('resume').setDescription('Tiếp tục phát nhạc'),
@@ -24,6 +24,10 @@ export const resume = {
       player.on('error', (error) => {
         console.error('Lỗi khi tiếp tục nhạc: ', error)
       })
+      if (queue_map.length === 0) {
+        await interaction.editReply({ content: '🚫 Không còn bài nào để phát' })
+        return
+      }
       await interaction.editReply({ content: 'Bot đã tiếp tục nhạc!' })
     } catch (error) {
       console.error(error)

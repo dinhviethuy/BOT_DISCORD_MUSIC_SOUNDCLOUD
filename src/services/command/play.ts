@@ -161,7 +161,7 @@ export const play_song = {
       lastConnection = connection
       queue_map.push(name!)
       lastInteraction = interaction
-      if (player.state.status !== AudioPlayerStatus.Playing) {
+      if (player.state.status !== AudioPlayerStatus.Playing && player.state.status !== AudioPlayerStatus.Paused) {
         playNextSong()
       } else {
         await interaction.editReply({ content: `✅ Đã thêm **${name}** vào hàng chờ!` })

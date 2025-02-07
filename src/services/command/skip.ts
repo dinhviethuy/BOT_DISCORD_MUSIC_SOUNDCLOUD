@@ -19,11 +19,17 @@ export const skip = {
         await interaction.editReply({ content: 'Bot chưa được join vào kênh thoại. Vui lòng sử dụng lệnh join trước!' })
         return
       }
-      if (player.state.status !== AudioPlayerStatus.Playing) {
+      if (player.state.status !== AudioPlayerStatus.Playing && player.state.status !== AudioPlayerStatus.Paused) {
         await interaction.editReply({ content: '🚫 Không có bài hát nào đang phát!' })
         return
       }
-      player.stop()
+      if (player.state.status === AudioPlayerStatus.Paused) {
+        player.unpause()
+        player.stop()
+        player.pause()
+      } else {
+        player.stop()
+      }
       await interaction.editReply({ content: '⏭️ Đã bỏ qua bài hát!' })
       player.on('error', (error) => {
         console.error('Lỗi khi tiếp tục nhạc: ', error)
