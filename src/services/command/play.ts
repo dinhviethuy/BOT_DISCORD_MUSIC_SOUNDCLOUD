@@ -6,7 +6,7 @@ import {
   joinVoiceChannel,
   VoiceConnection
 } from '@discordjs/voice'
-import { ChatInputCommandInteraction, EmbedBuilder, GuildMember, SlashCommandBuilder } from 'discord.js'
+import { ChatInputCommandInteraction, EmbedBuilder, GuildMember, SlashCommandBuilder, User } from 'discord.js'
 import play from 'play-dl'
 import { config } from 'dotenv'
 
@@ -56,7 +56,8 @@ async function playNextSong() {
       .setThumbnail(song.thumbnail)
       .addFields(
         { name: 'Author', value: song.publisher?.artist ?? 'Unknown', inline: true },
-        { name: 'Type', value: 'Song', inline: true }
+        { name: 'Type', value: 'Song', inline: true },
+        { name: 'Create by', value: (lastInteraction?.member?.user as User).username ?? 'Unknown', inline: true },
       )
     const audio = await play.stream(url)
     const resource = createAudioResource(audio.stream, { inputType: audio.type })
