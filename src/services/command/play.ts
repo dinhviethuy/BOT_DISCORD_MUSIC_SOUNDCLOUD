@@ -8,12 +8,11 @@ import {
 } from '@discordjs/voice'
 import { ChatInputCommandInteraction, EmbedBuilder, GuildMember, SlashCommandBuilder, User } from 'discord.js'
 import play from 'play-dl'
-import { config } from 'dotenv'
+import envConfig from '~/utils/config'
 
-config()
 play.setToken({
   soundcloud: {
-    client_id: process.env.SOUNDCLOUD_CLIENT_ID || ''
+    client_id: envConfig.SOUNDCLOUD_CLIENT_ID || ''
   }
 })
 
@@ -57,7 +56,7 @@ async function playNextSong() {
       .addFields(
         { name: 'Author', value: song.publisher?.artist ?? 'Unknown', inline: true },
         { name: 'Type', value: 'Song', inline: true },
-        { name: 'Create by', value: (lastInteraction?.member?.user as User).username ?? 'Unknown', inline: true },
+        { name: 'Create by', value: (lastInteraction?.member?.user as User).username ?? 'Unknown', inline: true }
       )
     const audio = await play.stream(url)
     const resource = createAudioResource(audio.stream, { inputType: audio.type })

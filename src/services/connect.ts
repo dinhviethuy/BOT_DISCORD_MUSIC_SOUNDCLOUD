@@ -1,5 +1,4 @@
 import { Client, Collection, CommandInteraction, Events, GatewayIntentBits } from 'discord.js'
-import { config } from 'dotenv'
 import { bootstrap } from './command'
 import { ping } from './command/ping'
 import { join } from './command/join'
@@ -8,10 +7,9 @@ import { pause } from './command/pause'
 import { leave } from './command/leave'
 import { resume } from './command/resume'
 import { skip } from './command/skip'
+import envConfig from '~/utils/config'
 
-config()
-
-const TOKEN = process.env.TOKEN
+const TOKEN = envConfig.TOKEN
 const commands = new Collection<string, any>()
 commands.set(ping.data.name, ping)
 commands.set(join.data.name, join)
