@@ -55,9 +55,16 @@ async function playNextSong() {
       .setThumbnail(song.thumbnail)
       .addFields(
         { name: 'Author', value: song.publisher?.artist ?? 'Unknown', inline: true },
-        { name: 'Type', value: 'Song', inline: true },
-        { name: 'Create by', value: (lastInteraction?.member?.user as User).username ?? 'Unknown', inline: true }
+        { name: 'Type', value: 'Song', inline: true }
       )
+      .setAuthor({
+        name: lastInteraction?.member?.user.username ?? 'Unknown',
+        iconURL: (lastInteraction?.member?.user as User).displayAvatarURL({ extension: 'png' }) ?? ''
+      })
+      .setFooter({
+        text: 'Bot by Đinh Viết Huy',
+        iconURL: envConfig.AUTHOR_AVATAR_URL
+      })
     const audio = await play.stream(url)
     const resource = createAudioResource(audio.stream, { inputType: audio.type })
     player.play(resource)

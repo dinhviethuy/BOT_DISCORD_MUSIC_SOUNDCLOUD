@@ -13,7 +13,8 @@ if (!fs.existsSync('.env')) {
 const configSchema = z.object({
   TOKEN: z.string(),
   SOUNDCLOUD_CLIENT_ID: z.string(),
-  ADMIN_ID: z.string()
+  ADMIN_ID: z.string(),
+  AUTHOR_AVATAR_URL: z.string()
 })
 
 const configEnv = configSchema.safeParse(process.env)
